@@ -8,11 +8,15 @@ import './button.css'
 //     </>
 // )}
 
+const sayHello = ()=>{
+    console.log('hello');
+}
+
 class Button extends React.Component{
     render(){
         return (
             <>
-                <button className='btn'> {this.props.label}</button>
+                <button className='btn' onClick={sayHello}> {this.props.label}</button>
             </>
         )
     }
