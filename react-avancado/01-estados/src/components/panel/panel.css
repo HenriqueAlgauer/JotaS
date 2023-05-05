@@ -1,0 +1,12 @@
+.panel{
+/* background: url(.. /. ./images/paneL.5pg) center center no-repeat; */
+width: 100%;
+background-color: #000;
+height: 425px;
+background-size: cover;
+color:white;
+line-height: 425px;
+text-align: center;
+font-size: 40px;
+text-transform: uppercase;
+}
