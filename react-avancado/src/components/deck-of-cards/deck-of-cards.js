@@ -1,63 +1,67 @@
 import { Component, useEffect, useState } from "react";
 import { Form } from "../form/form";
 
-async function getDeck() {
+async function createDeck() {
     const response = await fetch(`https://deckofcardsapi.com/api/deck/new/shuffle/?deck_count=1`)
     const deck = await response.json()
     return deck.deck_id
 }
 
 async function getCards(deckId) {
-    const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=1`)
+    const response = await fetch(`https://deckofcardsapi.com/api/deck/${deckId}/draw/?count=2`)
     return await response.json()
 }
+
 
 
 const CardsList = (props) => {
     return (
         <ul>
-            {
+            { 
                 props.cards.map((card, index) => {
                     return (
-                        <li key={index} >
+                        <li key={index}>
                             <img src={card.image} alt={card.value} />
+                            <p>{card.value} {card.suit}</p>
                         </li>
                     )
                 })
             }
-        </ul>)
+        </ul>
+    )
 }
 
 const DeckOfCards = () => {
-    
+
     const [deck, setDeck] = useState({
-        cards: [],
+        cards: []
     })
-    
+
     useEffect(() => {
         const fetchData = async () => {
-            const deckId = await getDeck()
+            const deckId = await createDeck()
             const data = await getCards(deckId)
+
             setDeck({
                 cards: data.cards
             })
         }
         fetchData()
     }, [])
-    
+
     const addCard = (newCard)=>{
-        console.log(newCard);
         setDeck({
-            cards:[...deck.cards, newCard]
+            cards: [...deck.cards, newCard]
         })
     }
-    
+
     return (
         <section>
             <Form addCard={addCard}/>
-            {deck.cards.length > 0 ? <CardsList cards={deck.cards} /> : 'Nenhuma carta encontrada '}
+            {deck.cards.length > 0 ? <CardsList cards={deck.cards}/> : 'Nenhuma carta foi encontrada '}
         </section>
     )
+    
 }
 
 export { DeckOfCards }
